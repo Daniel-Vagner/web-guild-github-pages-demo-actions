@@ -2,7 +2,7 @@ name: Deploy Blazor WASM to GitHub Pages
 
 on:
   push:
-    branches: [ main ]
+    branches: [ master ]
   workflow_dispatch:
 
 permissions:
@@ -41,6 +41,9 @@ jobs:
 
       - name: Create 404.html for client-side routing
         run: cp publish/wwwroot/index.html publish/wwwroot/404.html
+
+      - name: Set base href for GitHub Pages
+        run: sed -i 's|<base href="/web-guild-github-pages-demo/" />|<base href="/web-guild-github-pages-demo-actions/" />|g' publish/wwwroot/index.html publish/wwwroot/404.html
 
       - name: Add .nojekyll
         run: touch publish/wwwroot/.nojekyll
